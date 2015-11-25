@@ -4,6 +4,7 @@ class Cliente {
 
 	String identificador
 	String email
+	String razaoSocial
 	
 	// Endereço
 	String endereco

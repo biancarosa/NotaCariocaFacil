@@ -1,8 +1,9 @@
 package io.github.notacariocafacil.gerador.impl
 
+import groovy.xml.XmlUtil;
 import io.github.notacariocafacil.Empresa
 import io.github.notacariocafacil.NotaCarioca
-import io.github.notacariocafacil.gerador.Gerador;
+import io.github.notacariocafacil.gerador.Gerador
 
 class GeradorXML implements Gerador {
 
@@ -16,57 +17,63 @@ class GeradorXML implements Gerador {
 					"Cnpj"(empresa.cnpj)
 					"InscricaoMunicipal"(empresa.inscricaoMunicipal)
 					"QuantidadeRps"(notas.size())
-					"ListaRPS" {
+					"ListaRps" {
 						for (nota in notas) {
-							geraRPS(builder, nota)
+							geraRPS(builder, nota, empresa)
 						}
 					}
 				}
 			}
 		}
+		
+		return XmlUtil.serialize(xml)
 	}
 
-	def geraRPS = { builder, nota ->
-		builder."RPS" {
-			"InfRps"("Id", nota.dados.codigoRps) {
+	def geraRPS = { builder, NotaCarioca nota, Empresa empresa->
+		builder."Rps" {
+			"InfRps"("Id" :  nota.dados.idRps) {
 				"IdentificacaoRps" {
-					"Numero"(nota.dados.codigoRps)
-					"Serie"()
-					"Tipo"()
+					"Numero"(nota.dados.numeroRps)
+					"Serie"(nota.dados.serieRps)
+					"Tipo"(nota.dados.tipoRps)
 				}
-				"DataEmissao"(new Date())
-				"NaturezaOperacao"()
-				"OptanteSimplesNacional"()
-				"IncentivadorCultural"()
-				"Status"()
+				"DataEmissao"(nota.dataEmissao.format("yyyy-MM-dd'T'HH:mm:ss"))
+				"NaturezaOperacao"(nota.dados.naturezaOperacao)
+				"OptanteSimplesNacional"(nota.dados.optanteSimplesNacional)
+				"IncentivadorCultural"(nota.dados.incentivadorCultural)
+				"Status"(nota.dados.status)
 				"Servico" {
 					"Valores" {
-						"ValorServicos"()
-						"ValorDeducoes"()
-						"ValorPis"()
-						"ValorCofins"()
-						"ValorInss"()
-						"ValorIr"()
-						"ValorCsll"()
-						"IssRetido"()
-						"ValorIss"()
-						"OutrasRetencoes"()
-						"Aliquota"()
-						"DescontoIncondicionado"()
-						"DescontoCondicionado"()
+						"ValorServicos"(nota.dados.valorServicos)
+						"ValorDeducoes"(nota.dados.valorDeducoes)
+						"ValorPis"(nota.dados.valorPis)
+						"ValorCofins"(nota.dados.valorCofins)
+						"ValorInss"(nota.dados.valorInss)
+						"ValorIr"(nota.dados.valorIr)
+						"ValorCsll"(nota.dados.valorCsll)
+						"IssRetido"(nota.dados.issRetido)
+						"ValorIss"(nota.dados.valorIss)
+						"OutrasRetencoes"(nota.dados.outrasRetencoes)
+						"Aliquota"(nota.dados.aliquota)
+						"DescontoIncondicionado"(nota.dados.descontoIncondicionado)
+						"DescontoCondicionado"(nota.dados.descontoCondicionado)
 					}
-					"ItemListaServico"()
-					"CodigoTributacaoMunicipio"()
-					"Discriminacao"()
-					"CodigoMunicipio"()
+					"ItemListaServico"(nota.dados.itemListaServico)
+					"CodigoTributacaoMunicipio"(nota.dados.codigoTributacaoMunicipio)
+					"Discriminacao"(nota.dados.discriminacao)
+					"CodigoMunicipio"(nota.dados.codigoMunicipio)
 				}
 				"Prestador" {
-					"Cnpj" (nota.empresa.cnpj)
-					"InscricaoMunicipal" (nota.empresa.inscricaoMunicipal)
+					"Cnpj" (empresa.cnpj)
+					"InscricaoMunicipal" (empresa.inscricaoMunicipal)
 				}
 				"Tomador" {
-					"IdentificacaoTomador" { "CpfCnpj"() }
-					"RazaoSocial"()
+					"IdentificacaoTomador" { 
+						"CpfCnpj" {
+							"Cpf"(nota.cliente.identificador)
+						}
+					}
+					"RazaoSocial"(nota.cliente.razaoSocial)
 					"Endereco" {
 						"Endereco"(nota.cliente.endereco)
 						"Numero"(nota.cliente.numero)
@@ -76,9 +83,9 @@ class GeradorXML implements Gerador {
 						"Uf"(nota.cliente.unidadeFederativa)
 						"Cep"(nota.cliente.cep)
 					}
-				}
-				"Contato" {
-					"Email"(nota.cliente.email)
+					"Contato" {
+						"Email"(nota.cliente.email)
+					}
 				}
 			}
 		}

@@ -2,13 +2,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.notacariocafacil</groupId>
 	<artifactId>notacariocafacil</artifactId>
+	
 	<!-- Dependencies for test execution and runtime -->
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
@@ -71,7 +71,7 @@
 	</distributionManagement>
 
 
-	<version>1</version>
+	<version>0.0.7DEV</version>
 </project>
 
 

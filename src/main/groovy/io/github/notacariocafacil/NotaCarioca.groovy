@@ -2,7 +2,7 @@ package io.github.notacariocafacil
 
 class NotaCarioca {
 
-	Dados dados
-	Cliente cliente
-	
+	Dados dados = new Dados()
+	Cliente cliente = new Cliente()
+	Date dataEmissao = new Date()
 }
