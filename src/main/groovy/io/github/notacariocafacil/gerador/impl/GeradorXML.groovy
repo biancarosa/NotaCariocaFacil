@@ -70,7 +70,11 @@ class GeradorXML implements Gerador {
 				"Tomador" {
 					"IdentificacaoTomador" { 
 						"CpfCnpj" {
-							"Cpf"(nota.cliente.identificador)
+							if (nota.cliente.cpf) {
+								"Cpf"(nota.cliente.cpf)
+							} else {
+								"Cnpj"(nota.cliente.cnpj)
+							}
 						}
 					}
 					"RazaoSocial"(nota.cliente.razaoSocial)

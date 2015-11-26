@@ -2,6 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.notacariocafacil</groupId>
 	<artifactId>notacariocafacil</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>NotaCariocaFacil</name>
 	
 	<!-- Dependencies for test execution and runtime -->
 	<dependencies>
@@ -69,9 +72,6 @@
 			<url>s3://fisgomaven/release</url>
 		</repository>
 	</distributionManagement>
-
-
-	<version>0.0.7DEV</version>
 </project>
 
 

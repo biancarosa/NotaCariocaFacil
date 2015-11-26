@@ -1,0 +1,17 @@
+apply plugin: 'groovy'
+apply plugin: 'application'
+version = '1.0'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.codehaus.groovy:groovy-all:2.3.6'
+	compile 'junit:junit:4.12'
+}
+
+task archive(type: Jar,dependsOn:[':compileJava',':compileGroovy']) {
+	from files(sourceSets.main.output.classesDir)
+	from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+}

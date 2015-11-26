@@ -2,7 +2,8 @@ package io.github.notacariocafacil
 
 class Cliente {
 
-	String identificador
+	String cpf
+	String cnpj
 	String email
 	String razaoSocial
 	
